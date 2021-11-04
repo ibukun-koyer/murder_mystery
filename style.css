@@ -4,7 +4,10 @@ body {
 .root {
   width: 100%;
   height: 100vh;
+  position: relative;
 }
 .canvas {
-  background-color: aqua;
+  top: 0;
+  left: 0;
+  position: absolute;
 }

@@ -11,10 +11,11 @@ let current_width = config.initial_board_width;
 let current_height = config.initial_board_height;
 let current_x_offset = config.initial_x_offset;
 let current_y_offset = config.initial_y_offset;
-
+let shouldRedrawBoard = false;
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
   let rootsize = getParentProp(pos, { float: true });
+
   let current_offset = max_size - rootsize;
   coord = (coord / 100) * max_size;
   if (coord > rootsize) {
@@ -26,12 +27,21 @@ function computeOffset(coord, pos, max_size) {
   }
   return current_offset * -1;
 }
+//a function that calls the recomputation of board offset, also, allows us know when to redraw the board
+function triggerOffsetCal(x = players_location[0], y = players_location[1]) {
+  let newxoffset = computeOffset(x, "width", current_width);
+  let newyoffset = computeOffset(y, "height", current_height);
+  if (newxoffset !== current_x_offset || newyoffset !== current_y_offset) {
+    shouldRedrawBoard = true;
+    current_x_offset = newxoffset;
+    current_y_offset = newyoffset;
+  }
+}
 //normalizing the image position
 function normalize_image_position(x, y, isPlayerMovement) {
   //calling the board offset during player movement
   if (isPlayerMovement) {
-    current_x_offset = computeOffset(x, "width", current_width);
-    current_y_offset = computeOffset(y, "height", current_height);
+    triggerOffsetCal();
   }
   let rootWidth = getParentProp("width", { float: true });
   let rootHeight = getParentProp("height", { float: true });
@@ -102,6 +112,12 @@ function direct_player() {
   else return "amongus_sprite_reverse.png";
 }
 function positionPlayer() {
+  player_sprite_context.clearRect(
+    0,
+    0,
+    player_sprite_canvas.width,
+    player_sprite_canvas.height
+  );
   const player = createImage(direct_player());
   player.onload = drawPlayer;
   //draw the player on the board
@@ -112,26 +128,35 @@ function positionPlayer() {
       players_location[1],
       true
     );
-    //compute size of sprite
-    let player_size = players_def_size * (current_height / current_width);
-    //draw the player
-    context.drawImage(
-      this,
-      player_pos[0],
-      player_pos[1],
-      player_size,
-      player_size
-    );
+    if (!shouldRedrawBoard) {
+      //compute size of sprite
+      let player_size = players_def_size * (current_height / current_width);
+      //draw the player
+      player_sprite_context.drawImage(
+        this,
+        player_pos[0],
+        player_pos[1],
+        player_size,
+        player_size
+      );
+    } else {
+      shouldRedrawBoard = false;
+      drawBoard(context);
+    }
   }
 }
-//draw image unto canvas, currently very inefficient (to be optimized later)
+//draw image unto canvas, currently very inefficient (to be optimized later) - has now been moderately optimized, more optimization later
 function drawBoard(context) {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
   const board = createImage("./rombouts-flavien-among-us-map.jpg");
   board.onload = draw;
+
   //draw image once it loads
-  console.log(current_x_offset, current_y_offset);
   function draw() {
+    console.log("redrawing the item");
     computeBoardSize(board);
+
     context.drawImage(
       this,
       current_x_offset,
@@ -145,9 +170,12 @@ function drawBoard(context) {
 
 //canvas available, ready for tweaking
 const canvas = createCanvas();
+const player_sprite_canvas = createCanvas();
 const context = prepareContext(canvas);
+const player_sprite_context = prepareContext(player_sprite_canvas);
 
 //draw board and also account for window resize
+triggerOffsetCal();
 drawBoard(context);
 $addEventListener(window, "resize", () => drawBoard(context));
 //event listener buttons to be used in the application
@@ -163,5 +191,5 @@ $addEventListener(window, "keydown", (e) => {
   } else if (e.code === "ArrowDown") {
     players_location[1]++;
   }
-  drawBoard(context);
+  positionPlayer();
 });
