@@ -15,27 +15,29 @@ let current_y_offset = config.initial_y_offset;
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
   let rootsize = getParentProp(pos, { float: true });
-  let current_offset = 0;
+  let current_offset = max_size - rootsize;
+  coord = (coord / 100) * max_size;
   if (coord > rootsize) {
     let multiplier = Math.ceil(coord / max_size);
-    current_offset = (multiplier - 1) * rootsize;
+    current_offset = multiplier * rootsize;
     if (max_size - current_offset < rootsize) {
       current_offset = max_size - current_offset;
     }
   }
-  return current_offset;
+  return current_offset * -1;
 }
 //normalizing the image position
 function normalize_image_position(x, y, isPlayerMovement) {
-  let rootWidth = getParentProp("width", { float: true });
-  let rootHeight = getParentProp("height", { float: true });
-  x = rootWidth - (((x / 100) * current_width) % rootWidth);
-  y = ((y / 100) * current_height) % rootHeight;
   //calling the board offset during player movement
   if (isPlayerMovement) {
     current_x_offset = computeOffset(x, "width", current_width);
     current_y_offset = computeOffset(y, "height", current_height);
   }
+  let rootWidth = getParentProp("width", { float: true });
+  let rootHeight = getParentProp("height", { float: true });
+  x = rootWidth - (((x / 100) * current_width) % rootWidth);
+  y = ((y / 100) * current_height) % rootHeight;
+
   return [x, y];
 }
 
@@ -76,19 +78,13 @@ function createImage(src = "/") {
   image.src = src;
   return image;
 }
-//right allign the image in the canvas using 0 0 origin points as ref
-function rightAlign(image) {
-  let width_diff =
-    parseFloat(image.width) - getParentProp("width", { float: true });
-  return width_diff * -1;
-}
+
 //function to compute the size of the board based on screen size
 function computeBoardSize(image) {
   //image size conditions
   //--->image height must be greater than min_image height
   //--->image width must be greater than min_image width
   //-->image must be ratiofied,we use width to calculate height but if height increases and inversely calculating width is greater than width, then height's width becomes new width
-  console.log(image.height, image.width);
   const width = getParentProp("width", { float: true }) * width_ratio;
   const height_reversed_width =
     getParentProp("height", { float: true }) * width_ratio * (1 / height_ratio);
@@ -100,7 +96,7 @@ function computeBoardSize(image) {
   current_width = image.width;
   current_height = image.height;
 }
-
+//function that points the player in the right direction
 function direct_player() {
   if (direction === "right") return "amongus_sprite.png";
   else return "amongus_sprite_reverse.png";
@@ -113,11 +109,12 @@ function positionPlayer() {
     //normalize the player position, meaning convert thhe pos from a 0-100 to a 0 - maxwidth and 0 - maxheight
     let player_pos = normalize_image_position(
       players_location[0],
-      players_location[1]
+      players_location[1],
+      true
     );
-    //draw the player
+    //compute size of sprite
     let player_size = players_def_size * (current_height / current_width);
-
+    //draw the player
     context.drawImage(
       this,
       player_pos[0],
@@ -125,18 +122,23 @@ function positionPlayer() {
       player_size,
       player_size
     );
-    // direct_player(context, true);
   }
 }
-//draw image unto canvas
+//draw image unto canvas, currently very inefficient (to be optimized later)
 function drawBoard(context) {
   const board = createImage("./rombouts-flavien-among-us-map.jpg");
   board.onload = draw;
   //draw image once it loads
-
+  console.log(current_x_offset, current_y_offset);
   function draw() {
     computeBoardSize(board);
-    context.drawImage(this, rightAlign(this), 0, board.width, board.height);
+    context.drawImage(
+      this,
+      current_x_offset,
+      current_y_offset,
+      board.width,
+      board.height
+    );
     positionPlayer();
   }
 }
@@ -148,6 +150,7 @@ const context = prepareContext(canvas);
 //draw board and also account for window resize
 drawBoard(context);
 $addEventListener(window, "resize", () => drawBoard(context));
+//event listener buttons to be used in the application
 $addEventListener(window, "keydown", (e) => {
   if (e.code === "ArrowLeft") {
     direction = "left";
@@ -160,5 +163,5 @@ $addEventListener(window, "keydown", (e) => {
   } else if (e.code === "ArrowDown") {
     players_location[1]++;
   }
-  positionPlayer();
+  drawBoard(context);
 });
