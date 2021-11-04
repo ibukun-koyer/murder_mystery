@@ -2,6 +2,7 @@ const root = document.querySelector(".root");
 const min_image_width = config.min_image_width;
 const width_ratio = config.width_ratio;
 const height_ratio = config.height_ratio;
+const players_def_size = config.players_def_size;
 
 //where players location is x,y pair with values ranging from 0 - 100
 const players_location = config.players_initial_position;
@@ -116,7 +117,14 @@ function drawBoard(context) {
       );
       console.log("drawing player at ", player_pos);
       //draw the player
-      context.drawImage(this, player_pos[0], player_pos[1]);
+      let player_size = players_def_size * (min_image_width / current_width);
+      context.drawImage(
+        this,
+        player_pos[0],
+        player_pos[1],
+        player_size,
+        player_size
+      );
     }
   }
 }
