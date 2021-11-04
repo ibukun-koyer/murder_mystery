@@ -26,8 +26,10 @@ function computeOffset(coord, pos, max_size) {
 }
 //normalizing the image position
 function normalize_image_position(x, y, isPlayerMovement) {
-  x = (x / 100) * current_width;
-  y = (y / 100) * current_height;
+  let rootWidth = getParentProp("width", { float: true });
+  let rootHeight = getParentProp("height", { float: true });
+  x = rootWidth - (((x / 100) * current_width) % rootWidth);
+  y = ((y / 100) * current_height) % rootHeight;
   //calling the board offset during player movement
   if (isPlayerMovement) {
     current_x_offset = computeOffset(x, "width", current_width);
