@@ -105,35 +105,39 @@ function direct_player() {
   if (direction === "right") return "amongus_sprite.png";
   else return "amongus_sprite_reverse.png";
 }
+function positionPlayer() {
+  const player = createImage(direct_player());
+  player.onload = drawPlayer;
+  //draw the player on the board
+  function drawPlayer() {
+    //normalize the player position, meaning convert thhe pos from a 0-100 to a 0 - maxwidth and 0 - maxheight
+    let player_pos = normalize_image_position(
+      players_location[0],
+      players_location[1]
+    );
+    //draw the player
+    let player_size = players_def_size * (current_height / current_width);
+
+    context.drawImage(
+      this,
+      player_pos[0],
+      player_pos[1],
+      player_size,
+      player_size
+    );
+    // direct_player(context, true);
+  }
+}
 //draw image unto canvas
 function drawBoard(context) {
   const board = createImage("./rombouts-flavien-among-us-map.jpg");
   board.onload = draw;
   //draw image once it loads
+
   function draw() {
     computeBoardSize(board);
     context.drawImage(this, rightAlign(this), 0, board.width, board.height);
-    const player = createImage(direct_player());
-    player.onload = drawPlayer;
-    //draw the player on the board
-    function drawPlayer() {
-      //normalize the player position, meaning convert thhe pos from a 0-100 to a 0 - maxwidth and 0 - maxheight
-      let player_pos = normalize_image_position(
-        players_location[0],
-        players_location[1]
-      );
-      //draw the player
-      let player_size = players_def_size * (current_height / current_width);
-
-      context.drawImage(
-        this,
-        player_pos[0],
-        player_pos[1],
-        player_size,
-        player_size
-      );
-      // direct_player(context, true);
-    }
+    positionPlayer();
   }
 }
 
@@ -144,3 +148,17 @@ const context = prepareContext(canvas);
 //draw board and also account for window resize
 drawBoard(context);
 $addEventListener(window, "resize", () => drawBoard(context));
+$addEventListener(window, "keydown", (e) => {
+  if (e.code === "ArrowLeft") {
+    direction = "left";
+    players_location[0]++;
+  } else if (e.code === "ArrowRight") {
+    direction = "right";
+    players_location[0]--;
+  } else if (e.code === "ArrowUp") {
+    players_location[1]--;
+  } else if (e.code === "ArrowDown") {
+    players_location[1]++;
+  }
+  positionPlayer();
+});
