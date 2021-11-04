@@ -15,5 +15,7 @@ const config = {
   initial_x_offset: 0,
   initial_y_offset: 0,
   //the default size of the players sprite character
-  players_def_size: 320,
+  players_def_size: 250,
+  //default direction of sprite
+  default_direction: "left",
 };

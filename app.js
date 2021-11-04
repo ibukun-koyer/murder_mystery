@@ -3,6 +3,7 @@ const min_image_width = config.min_image_width;
 const width_ratio = config.width_ratio;
 const height_ratio = config.height_ratio;
 const players_def_size = config.players_def_size;
+let direction = config.default_direction;
 
 //where players location is x,y pair with values ranging from 0 - 100
 const players_location = config.players_initial_position;
@@ -100,6 +101,10 @@ function computeBoardSize(image) {
   current_height = image.height;
 }
 
+function direct_player() {
+  if (direction === "right") return "amongus_sprite.png";
+  else return "amongus_sprite_reverse.png";
+}
 //draw image unto canvas
 function drawBoard(context) {
   const board = createImage("./rombouts-flavien-among-us-map.jpg");
@@ -108,7 +113,7 @@ function drawBoard(context) {
   function draw() {
     computeBoardSize(board);
     context.drawImage(this, rightAlign(this), 0, board.width, board.height);
-    const player = createImage("./amongus_sprite.png");
+    const player = createImage(direct_player());
     player.onload = drawPlayer;
     //draw the player on the board
     function drawPlayer() {
@@ -117,9 +122,9 @@ function drawBoard(context) {
         players_location[0],
         players_location[1]
       );
-      console.log("drawing player at ", player_pos);
       //draw the player
-      let player_size = players_def_size * (min_image_width / current_width);
+      let player_size = players_def_size * (current_height / current_width);
+
       context.drawImage(
         this,
         player_pos[0],
@@ -127,6 +132,7 @@ function drawBoard(context) {
         player_size,
         player_size
       );
+      // direct_player(context, true);
     }
   }
 }
