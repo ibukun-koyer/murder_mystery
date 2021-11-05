@@ -14,7 +14,7 @@
   </head>
   <body>
     <main class="root"></main>
-    <section class="isNotVisible">
+    <section class="isEnabled">
       <article>
         <div class="page1-mainmenu isVisible">
           <div class="contain-avatar">
@@ -24,14 +24,13 @@
             />
           </div>
           <div class="contain-buttons">
-            <button>Play Game</button>
-            <button>Options</button>
-            <button>View Jornals</button>
+            <button class="play-game">Play Game</button>
+            <button class="options">Options</button>
+            <button class="view-journals">View Journals</button>
           </div>
         </div>
-        <div class="page2-mainmenu isNotVisible"></div>
-        <div class="page3-mainmenu isNotVisible"></div>
-        <div class="page4-mainmenu isNotVisible"></div>
+        <div class="page2-mainmenu isNotEnabled"></div>
+        <div class="page3-mainmenu isNotEnabled"></div>
       </article>
     </section>
     <nav>
@@ -45,7 +44,7 @@
     <script src="collision.js"></script>
     <script src="eventListeners.js"></script>
     <script src="mainMenu.js"></script>
-
     <script src="app.js"></script>
+    <script src="createSliders.js"></script>
   </body>
 </html>

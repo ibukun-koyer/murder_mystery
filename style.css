@@ -169,3 +169,19 @@ section article {
   transition: 0.3s;
   transform: translateY(-1rem);
 }
+.isNotEnabled {
+  display: none;
+}
+.isEnabled {
+  display: flex;
+}
+.page2-mainmenu::-webkit-scrollbar {
+  height: 0;
+  border-radius: 0.5rem;
+}
+.page2-mainmenu {
+  overflow: auto;
+}
+.config-label {
+  font-size: 1rem;
+}
