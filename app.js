@@ -1,4 +1,5 @@
 const root = document.querySelector(".root");
+const timer = document.querySelector("#timer");
 const min_image_width = config.min_image_width;
 const width_ratio = config.width_ratio;
 const height_ratio = config.height_ratio;
@@ -15,6 +16,7 @@ let current_y_offset = config.initial_y_offset;
 let shouldRedrawBoard = false;
 let collided_x = "";
 let collided_y = "";
+
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
   let rootsize_orig = getParentProp(pos, { float: true });
@@ -249,3 +251,19 @@ $addEventListener(window, "keydown", (e) => {
   }
   console.log(players_location);
 });
+
+setInterval(() => {
+  let [hour, minute, second] = timer.innerText.split(":");
+  console.log(hour, minute, second);
+  if (parseInt(second) < 59) {
+    second = String(parseInt(second) + 1).padStart(2, 0);
+  } else if (parseInt(minute) < 59) {
+    second = "00";
+    minute = String(parseInt(minute) + 1).padStart(2, 0);
+  } else {
+    second = "00";
+    minute = "00";
+    hour = String(parseInt(hour) + 1).padStart(2, 0);
+  }
+  timer.innerText = `${hour}:${minute}:${second}`;
+}, 1000);
