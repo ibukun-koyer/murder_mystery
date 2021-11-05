@@ -7,25 +7,42 @@ let direction = config.default_direction;
 
 //where players location is x,y pair with values ranging from 0 - 100
 const players_location = config.players_initial_position;
+let previous_position = config.players_initial_position;
 let current_width = config.initial_board_width;
 let current_height = config.initial_board_height;
 let current_x_offset = config.initial_x_offset;
 let current_y_offset = config.initial_y_offset;
 let shouldRedrawBoard = false;
+let collided_x = "";
+let collided_y = "";
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
   let rootsize = getParentProp(pos, { float: true });
-
   let current_offset = max_size - rootsize;
+  //coord should now be position in the whole image size, e.g, 1200 out of 2800 total size
   coord = (coord / 100) * max_size;
-  if (coord > rootsize) {
-    let multiplier = Math.ceil(coord / max_size);
-    current_offset = multiplier * rootsize;
-    if (max_size - current_offset < rootsize) {
-      current_offset = max_size - current_offset;
-    }
-  }
-  return current_offset * -1;
+
+  let multiplier = Math.ceil(coord / rootsize);
+
+  current_offset = multiplier * rootsize * -1;
+  console.log(current_offset);
+
+  //-----------------------------------------------
+  //-->collision detection
+  //-----------------------------------------------
+  // if (current_offset > 0) {
+  //   if (pos === "width") collided_x = "minus";
+  //   if (pos === "height") collided_y = "minus";
+  //   current_offset = 0;
+  // } else if (Math.abs(current_offset) + rootsize > max_size) {
+  //   if (pos === "width") collided_x = "plus";
+  //   if (pos === "height") collided_y = "plus";
+  //   current_offset = (max_size - rootsize) * -1;
+  // } else {
+  //   if (pos === "width") collided_x = "";
+  //   if (pos === "height") collided_y = "";
+  // }
+  return current_offset;
 }
 //a function that calls the recomputation of board offset, also, allows us know when to redraw the board
 function triggerOffsetCal(x = players_location[0], y = players_location[1]) {
@@ -43,10 +60,15 @@ function normalize_image_position(x, y, isPlayerMovement) {
   if (isPlayerMovement) {
     triggerOffsetCal();
   }
-  let rootWidth = getParentProp("width", { float: true });
-  let rootHeight = getParentProp("height", { float: true });
-  x = rootWidth - (((x / 100) * current_width) % rootWidth);
-  y = ((y / 100) * current_height) % rootHeight;
+  if (collided_x || collided_y) {
+    return previous_position;
+  } else {
+    let rootWidth = getParentProp("width", { float: true });
+    let rootHeight = getParentProp("height", { float: true });
+    x = rootWidth - (((x / 100) * current_width) % rootWidth);
+    y = ((y / 100) * current_height) % rootHeight;
+    previous_position = [x, y];
+  }
 
   return [x, y];
 }
@@ -154,7 +176,6 @@ function drawBoard(context) {
 
   //draw image once it loads
   function draw() {
-    console.log("redrawing the item");
     computeBoardSize(board);
 
     context.drawImage(
@@ -164,6 +185,7 @@ function drawBoard(context) {
       board.width,
       board.height
     );
+
     positionPlayer();
   }
 }
@@ -174,6 +196,17 @@ const player_sprite_canvas = createCanvas();
 const context = prepareContext(canvas);
 const player_sprite_context = prepareContext(player_sprite_canvas);
 
+function inc_dec(index, sign) {
+  if (sign === "+") {
+    if (players_location[index] < 100) {
+      players_location[index]++;
+    }
+  } else if (sign === "-") {
+    if (players_location[index] > 0) {
+      players_location[index]--;
+    }
+  }
+}
 //draw board and also account for window resize
 triggerOffsetCal();
 drawBoard(context);
@@ -182,14 +215,21 @@ $addEventListener(window, "resize", () => drawBoard(context));
 $addEventListener(window, "keydown", (e) => {
   if (e.code === "ArrowLeft") {
     direction = "left";
-    players_location[0]++;
+    inc_dec(0, "+");
+    positionPlayer();
+    if (collided_x === "minus") inc_dec(0, "-");
   } else if (e.code === "ArrowRight") {
     direction = "right";
-    players_location[0]--;
+    inc_dec(0, "-");
+    positionPlayer();
+    if (collided_x === "plus") inc_dec(0, "+");
   } else if (e.code === "ArrowUp") {
-    players_location[1]--;
+    inc_dec(1, "-");
+    positionPlayer();
+    if (collided_y === "plus") inc_dec(1, "+");
   } else if (e.code === "ArrowDown") {
-    players_location[1]++;
+    inc_dec(1, "+");
+    positionPlayer();
+    if (collided_y === "minus") inc_dec(1, "-");
   }
-  positionPlayer();
 });
