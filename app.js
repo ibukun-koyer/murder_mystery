@@ -255,17 +255,19 @@ $addEventListener(window, "keydown", (e) => {
 });
 
 setInterval(() => {
-  let [hour, minute, second] = timer.innerText.split(":");
+  if (!isPaused) {
+    let [hour, minute, second] = timer.innerText.split(":");
 
-  if (parseInt(second) < 59) {
-    second = String(parseInt(second) + 1).padStart(2, 0);
-  } else if (parseInt(minute) < 59) {
-    second = "00";
-    minute = String(parseInt(minute) + 1).padStart(2, 0);
-  } else {
-    second = "00";
-    minute = "00";
-    hour = String(parseInt(hour) + 1).padStart(2, 0);
+    if (parseInt(second) < 59) {
+      second = String(parseInt(second) + 1).padStart(2, 0);
+    } else if (parseInt(minute) < 59) {
+      second = "00";
+      minute = String(parseInt(minute) + 1).padStart(2, 0);
+    } else {
+      second = "00";
+      minute = "00";
+      hour = String(parseInt(hour) + 1).padStart(2, 0);
+    }
+    timer.innerText = `${hour}:${minute}:${second}`;
   }
-  timer.innerText = `${hour}:${minute}:${second}`;
 }, 1000);

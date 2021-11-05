@@ -14,8 +14,25 @@
   </head>
   <body>
     <main class="root"></main>
-    <section>
-      <article></article>
+    <section class="isNotVisible">
+      <article>
+        <div class="page1-mainmenu isVisible">
+          <div class="contain-avatar">
+            <img
+              src="https://cdn1.dotesports.com/wp-content/uploads/2020/09/16115058/amongus2.jpg"
+              alt="avatar"
+            />
+          </div>
+          <div class="contain-buttons">
+            <button>Play Game</button>
+            <button>Options</button>
+            <button>View Jornals</button>
+          </div>
+        </div>
+        <div class="page2-mainmenu isNotVisible"></div>
+        <div class="page3-mainmenu isNotVisible"></div>
+        <div class="page4-mainmenu isNotVisible"></div>
+      </article>
     </section>
     <nav>
       <ul>
@@ -26,8 +43,9 @@
 
     <script src="config.js"></script>
     <script src="collision.js"></script>
-    <script src="mainMenu.js"></script>
     <script src="eventListeners.js"></script>
+    <script src="mainMenu.js"></script>
+
     <script src="app.js"></script>
   </body>
 </html>

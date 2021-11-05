@@ -65,12 +65,12 @@ section {
   justify-content: center;
   align-items: center;
   overflow: auto;
-  min-height: 40rem;
+  min-height: 45rem;
 }
 section article {
   width: 30rem;
   max-width: 80%;
-  height: 30rem;
+  height: 40rem;
   background-image: linear-gradient(
       135deg,
       transparent 0%,
@@ -103,4 +103,69 @@ section article {
   box-shadow: inset 0 0 15px 15px var(--main-menu-border);
   box-sizing: border-box;
   border: 1px solid #fff;
+}
+.isVisible {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.isNotVisible {
+  opacity: 0;
+  transition: 0.3s;
+}
+.page1-mainmenu,
+.page2-mainmenu,
+.page3-main-menu {
+  padding: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.contain-avatar {
+  width: 100%;
+  height: var(--avatar-size);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contain-avatar img {
+  height: var(--avatar-size);
+  width: var(--avatar-size);
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: center center;
+}
+.contain-buttons {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  padding-top: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.contain-buttons button {
+  font-family: inherit;
+  font-size: 2rem;
+  color: white;
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--button-light),
+    var(--button-normal)
+  );
+  padding: 1rem;
+  border: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 15px 15px var(--button-dark),
+    0 0 16px 6px var(--button-shadow);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.contain-buttons button:hover {
+  transition: 0.3s;
+  transform: translateY(-1rem);
 }
