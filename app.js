@@ -17,15 +17,18 @@ let collided_x = "";
 let collided_y = "";
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
-  let rootsize = getParentProp(pos, { float: true });
-  let current_offset = max_size - rootsize;
-  //coord should now be position in the whole image size, e.g, 1200 out of 2800 total size
-  coord = (coord / 100) * max_size;
+  let rootsize_orig = getParentProp(pos, { float: true });
+  let rootsize = (rootsize_orig / max_size) * 100;
+  let current_offset = max_size - rootsize_orig * Math.ceil(coord / rootsize);
 
-  let multiplier = Math.ceil(coord / rootsize);
+  if (pos === "height") {
+    current_offset =
+      max_size -
+      rootsize_orig *
+        (Math.ceil(max_size / rootsize_orig) - Math.ceil(coord / rootsize) + 1);
+  }
 
-  current_offset = multiplier * rootsize * -1;
-  console.log(current_offset);
+  current_offset *= -1;
 
   //-----------------------------------------------
   //-->collision detection
@@ -67,6 +70,7 @@ function normalize_image_position(x, y, isPlayerMovement) {
     let rootHeight = getParentProp("height", { float: true });
     x = rootWidth - (((x / 100) * current_width) % rootWidth);
     y = ((y / 100) * current_height) % rootHeight;
+
     previous_position = [x, y];
   }
 
