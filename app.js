@@ -19,32 +19,25 @@ let collided_y = "";
 function computeOffset(coord, pos, max_size) {
   let rootsize_orig = getParentProp(pos, { float: true });
   let rootsize = (rootsize_orig / max_size) * 100;
-  let current_offset = max_size - rootsize_orig * Math.ceil(coord / rootsize);
+  let frame = Math.ceil(coord / rootsize);
+  let current_offset = max_size - rootsize_orig * frame;
 
   if (pos === "height") {
-    current_offset =
-      max_size -
-      rootsize_orig *
-        (Math.ceil(max_size / rootsize_orig) - Math.ceil(coord / rootsize) + 1);
+    frame =
+      Math.ceil(max_size / rootsize_orig) - Math.ceil(coord / rootsize) + 1;
+    current_offset = max_size - rootsize_orig * frame;
   }
-
-  current_offset *= -1;
-
   //-----------------------------------------------
   //-->collision detection
   //-----------------------------------------------
-  // if (current_offset > 0) {
-  //   if (pos === "width") collided_x = "minus";
-  //   if (pos === "height") collided_y = "minus";
-  //   current_offset = 0;
-  // } else if (Math.abs(current_offset) + rootsize > max_size) {
-  //   if (pos === "width") collided_x = "plus";
-  //   if (pos === "height") collided_y = "plus";
-  //   current_offset = (max_size - rootsize) * -1;
-  // } else {
-  //   if (pos === "width") collided_x = "";
-  //   if (pos === "height") collided_y = "";
-  // }
+
+  if (current_offset >= max_size) {
+    current_offset = max_size - rootsize_orig;
+  }
+  current_offset *= -1;
+
+  if (current_offset > 0) current_offset = 0;
+
   return current_offset;
 }
 //a function that calls the recomputation of board offset, also, allows us know when to redraw the board
@@ -72,6 +65,7 @@ function normalize_image_position(x, y, isPlayerMovement) {
     y = ((y / 100) * current_height) % rootHeight;
 
     previous_position = [x, y];
+    console.log(previous_position);
   }
 
   return [x, y];
@@ -160,7 +154,7 @@ function positionPlayer() {
       //draw the player
       player_sprite_context.drawImage(
         this,
-        player_pos[0],
+        player_pos[0] - player_size,
         player_pos[1],
         player_size,
         player_size
@@ -236,4 +230,5 @@ $addEventListener(window, "keydown", (e) => {
     positionPlayer();
     if (collided_y === "minus") inc_dec(1, "-");
   }
+  console.log(players_location);
 });
