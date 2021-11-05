@@ -159,6 +159,14 @@ function positionPlayer() {
         player_size,
         player_size
       );
+      console.log(player_pos);
+      vignette.style.backgroundImage = `radial-gradient(
+        circle at ${
+          (player_pos[0] / getParentProp("width", { float: true })) * 100
+        }% ${(player_pos[1] / getParentProp("height", { float: true })) * 100}%,
+        transparent 0%,
+        var(--vignette-color) ${config.vignitte_spread}
+      )`;
     } else {
       shouldRedrawBoard = false;
       drawBoard(context);
@@ -205,6 +213,15 @@ function inc_dec(index, sign) {
     }
   }
 }
+//div creator
+function divCreate(className) {
+  const div = document.createElement("div");
+  div.classList.add(className);
+  root.append(div);
+  return div;
+}
+//create a vignette div element
+const vignette = divCreate("vignette");
 //draw board and also account for window resize
 triggerOffsetCal();
 drawBoard(context);

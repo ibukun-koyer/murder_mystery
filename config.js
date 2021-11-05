@@ -18,4 +18,6 @@ const config = {
   players_def_size: 250,
   //default direction of sprite
   default_direction: "left",
+  //VIGNITTE SPREAD
+  vignitte_spread: "40%",
 };
