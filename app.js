@@ -230,31 +230,33 @@ drawBoard(context);
 $addEventListener(window, "resize", () => drawBoard(context));
 //event listener buttons to be used in the application
 $addEventListener(window, "keydown", (e) => {
-  if (e.code === "ArrowLeft") {
-    direction = "left";
-    inc_dec(0, "+");
-    positionPlayer();
-    if (collided_x === "minus") inc_dec(0, "-");
-  } else if (e.code === "ArrowRight") {
-    direction = "right";
-    inc_dec(0, "-");
-    positionPlayer();
-    if (collided_x === "plus") inc_dec(0, "+");
-  } else if (e.code === "ArrowUp") {
-    inc_dec(1, "-");
-    positionPlayer();
-    if (collided_y === "plus") inc_dec(1, "+");
-  } else if (e.code === "ArrowDown") {
-    inc_dec(1, "+");
-    positionPlayer();
-    if (collided_y === "minus") inc_dec(1, "-");
+  if (!isPaused) {
+    if (e.code === "ArrowLeft") {
+      direction = "left";
+      inc_dec(0, "+");
+      positionPlayer();
+      if (collided_x === "minus") inc_dec(0, "-");
+    } else if (e.code === "ArrowRight") {
+      direction = "right";
+      inc_dec(0, "-");
+      positionPlayer();
+      if (collided_x === "plus") inc_dec(0, "+");
+    } else if (e.code === "ArrowUp") {
+      inc_dec(1, "-");
+      positionPlayer();
+      if (collided_y === "plus") inc_dec(1, "+");
+    } else if (e.code === "ArrowDown") {
+      inc_dec(1, "+");
+      positionPlayer();
+      if (collided_y === "minus") inc_dec(1, "-");
+    }
+  } else {
   }
-  console.log(players_location);
 });
 
 setInterval(() => {
   let [hour, minute, second] = timer.innerText.split(":");
-  console.log(hour, minute, second);
+
   if (parseInt(second) < 59) {
     second = String(parseInt(second) + 1).padStart(2, 0);
   } else if (parseInt(minute) < 59) {

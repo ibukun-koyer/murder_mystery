@@ -1,0 +1,1 @@
+const isPaused = config.isPaused;

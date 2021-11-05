@@ -20,4 +20,6 @@ const config = {
   default_direction: "left",
   //VIGNITTE SPREAD
   vignitte_spread: "40%",
+  //current play state, played or paused
+  isPaused: true,
 };

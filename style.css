@@ -3,6 +3,7 @@
 body {
   margin: 0;
   font-family: "Wendy One", sans-serif;
+  background-color: black;
 }
 .root {
   width: 100%;
@@ -28,8 +29,9 @@ nav {
   padding-right: 2rem;
   box-sizing: border-box;
   color: white;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.1);
@@ -50,4 +52,55 @@ nav i {
 nav i:hover {
   transition: 0.3s;
   transform: scale(1.1);
+}
+section {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  min-height: 40rem;
+}
+section article {
+  width: 30rem;
+  max-width: 80%;
+  height: 30rem;
+  background-image: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 10%,
+      var(--shine-main-menu) 10%,
+      var(--shine-main-menu) 15%,
+      transparent 15%,
+      transparent
+    ),
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 20%,
+      var(--shine-main-menu) 20%,
+      var(--shine-main-menu) 35%,
+      transparent 35%,
+      transparent
+    ),
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 45%,
+      var(--shine-main-menu) 45%,
+      var(--shine-main-menu) 55%,
+      transparent 55%,
+      transparent
+    ),
+    linear-gradient(var(--main-menu-color), var(--main-menu-color));
+  border-radius: 1rem;
+  box-shadow: inset 0 0 15px 15px var(--main-menu-border);
+  box-sizing: border-box;
+  border: 1px solid #fff;
 }
