@@ -34,10 +34,18 @@ $addEventListener(mainManuButton, "click", () => {
 
 //add event listeners for buttons on main menu
 $addEventListener(document.querySelector(".play-game"), "click", () => {
+  use(2, "isNotEnabled", "isEnabled", page1);
+  use(1, "isNotEnabled", "isEnabled", page3);
+  use(1, "isNotEnabled", "isEnabled", page2);
   isPaused = false;
+
   adjustMainMenuAccoringly();
 });
 $addEventListener(document.querySelector(".options"), "click", () => {
   use(1, "isNotEnabled", "isEnabled", page1);
   use(2, "isNotEnabled", "isEnabled", page2);
+});
+$addEventListener(document.querySelector(".view-journals"), "click", () => {
+  use(1, "isNotEnabled", "isEnabled", page1);
+  use(2, "isNotEnabled", "isEnabled", page3);
 });
