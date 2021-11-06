@@ -1,13 +1,13 @@
 const root = document.querySelector(".root");
 const timer = document.querySelector("#timer");
 const min_image_width = config.min_image_width;
-const width_ratio = config.width_ratio;
+let width_ratio = config.width_ratio;
 const height_ratio = config.height_ratio;
-const players_def_size = config.players_def_size;
+let players_def_size = config.players_def_size;
 let direction = config.default_direction;
-const player_speed = config.player_speed;
+let player_speed = config.player_speed;
 let vignitte_color = config.vignitte_color;
-const vignitte_spread = config.vignitte_spread;
+let vignitte_spread = config.vignitte_spread;
 //where players location is x,y pair with values ranging from 0 - 100
 const players_location = config.players_initial_position;
 let previous_position = config.players_initial_position;
@@ -40,7 +40,17 @@ function computeOffset(coord, pos, max_size) {
   }
   current_offset *= -1;
 
-  if (current_offset > 0) current_offset = 0;
+  if (current_offset > 0) {
+    current_offset = 0;
+  }
+
+  // if (
+  //   pos === "height" &&
+  //   current_offset !== 0 &&
+  //   Math.abs(current_offset) < rootsize_orig
+  // ) {
+  //   current_offset = rootsize_orig * -1;
+  // }
 
   return current_offset;
 }
@@ -69,7 +79,6 @@ function normalize_image_position(x, y, isPlayerMovement) {
     y = ((y / 100) * current_height) % rootHeight;
 
     previous_position = [x, y];
-    console.log(previous_position);
   }
 
   return [x, y];
@@ -163,7 +172,7 @@ function positionPlayer() {
         player_size,
         player_size
       );
-      console.log(player_pos);
+
       vignette.style.backgroundImage = `radial-gradient(
         circle at ${
           (player_pos[0] / getParentProp("width", { float: true })) * 100
@@ -207,13 +216,30 @@ const context = prepareContext(canvas);
 const player_sprite_context = prepareContext(player_sprite_canvas);
 
 function inc_dec(index, sign) {
-  if (sign === "+") {
-    if (players_location[index] < 100) {
-      players_location[index] += player_speed;
-    }
-  } else if (sign === "-") {
-    if (players_location[index] > 0) {
-      players_location[index] -= player_speed;
+  let y =
+    index === 1
+      ? sign === "+"
+        ? Math.ceil(players_location[1] + player_speed)
+        : Math.ceil(players_location[1] - player_speed)
+      : Math.ceil(players_location[1]);
+  let x =
+    index === 0
+      ? sign === "+"
+        ? Math.ceil(players_location[0] + player_speed)
+        : Math.ceil(players_location[0] - player_speed)
+      : Math.ceil(players_location[0]);
+
+  let variable = parseInt(mappedArray[y + 4][100 - x]);
+
+  if (!variable) {
+    if (sign === "+") {
+      if (players_location[index] < 100) {
+        players_location[index] += player_speed;
+      }
+    } else if (sign === "-") {
+      if (players_location[index] > 0) {
+        players_location[index] -= player_speed;
+      }
     }
   }
 }
@@ -252,7 +278,6 @@ $addEventListener(window, "keydown", (e) => {
       positionPlayer();
       if (collided_y === "minus") inc_dec(1, "-");
     }
-  } else {
   }
 });
 

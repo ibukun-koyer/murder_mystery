@@ -7,4 +7,7 @@
   --button-dark: rgb(179, 5, 5);
   --button-normal: rgb(255, 47, 47);
   --button-shadow: rgba(1, 102, 102, 0.438);
+
+  --nav-black-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.2);
+  --nav-white-shadow: 0 0 16px 6px rgba(255, 255, 255, 0.1);
 }

@@ -35,6 +35,7 @@ nav {
   top: 0;
   left: 0;
   background: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--nav-white-shadow);
 }
 nav ul {
   margin: 0;
@@ -195,34 +196,7 @@ section article {
 .config-label:nth-child(1) {
   margin-top: 0;
 }
-.scrollbar {
-  margin-top: 8%;
-  width: 100%;
-  height: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 1rem;
-  box-shadow: 0 0 10px 3px var(--button-shadow);
-  position: relative;
-}
-.scroll-thumb {
-  position: absolute;
-  left: 0;
-  height: 3rem;
-  width: 3rem;
-  box-shadow: inset 0 0 8px 3px var(--button-dark),
-    0 0 16px 6px var(--button-shadow);
 
-  top: -1.25rem;
-  background-image: radial-gradient(
-    ellipse at center,
-    var(--button-light),
-    var(--button-normal)
-  );
-  background-color: rgb(255, 128, 128);
-  border-radius: 0.5rem;
-  cursor: pointer;
-  border: 0.5px solid white;
-}
 .tick-container {
   width: 100%;
   height: 0.5rem;
@@ -247,6 +221,7 @@ section article {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .color_box {
   width: 3rem;
@@ -265,4 +240,65 @@ section article {
 
   border: 3px solid rgb(255, 107, 107);
   box-sizing: border-box;
+}
+
+.slider-container {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+
+  /*from me*/
+  margin-top: 8%;
+  width: 100%;
+  height: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 1rem;
+  box-shadow: 0 0 10px 3px var(--button-shadow);
+  position: relative;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  height: 3rem;
+  width: 3rem;
+  box-shadow: inset 0 0 8px 3px var(--button-dark),
+    0 0 16px 6px var(--button-shadow);
+
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--button-light),
+    var(--button-normal)
+  );
+  background-color: rgb(255, 128, 128);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 0.5px solid white;
+}
+
+.slider::-moz-range-thumb {
+  height: 3rem;
+  width: 3rem;
+  box-shadow: inset 0 0 8px 3px var(--button-dark),
+    0 0 16px 6px var(--button-shadow);
+
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--button-light),
+    var(--button-normal)
+  );
+  background-color: rgb(255, 128, 128);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: 0.5px solid white;
 }

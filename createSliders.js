@@ -8,7 +8,16 @@ function createLabel(text) {
   placeholder_container.setAttribute("for", id);
   page2.append(placeholder_container);
 }
-function createSlider(placeholder, min, max, pos, fxn, minLabel, maxLabel) {
+function createSlider(
+  placeholder,
+  min,
+  max,
+  pos,
+  fxn,
+  minLabel,
+  maxLabel,
+  step = 1
+) {
   if (!minLabel) {
     minLabel = `${min}`;
   }
@@ -18,34 +27,25 @@ function createSlider(placeholder, min, max, pos, fxn, minLabel, maxLabel) {
 
   //create placeholder
   createLabel(placeholder);
-  //scrollbar
-  const scrollbar = document.createElement("div");
-  scrollbar.classList.add("scrollbar");
-  //scrollbar thumb - relative to scrollbar
-  const scrollbar_thumb = document.createElement("div");
-  scrollbar_thumb.classList.add("scroll-thumb");
-  scrollbar.append(scrollbar_thumb);
-  let isSliding = false;
-  //event listeners
-  $addEventListener(scrollbar_thumb, "dragstart", (e) => {
-  
-    isSliding = e.clientX;
-  });
-  $addEventListener(window, "mousemove", () => {
-    if (isSliding) {
-      console.log(isSliding);
-    }
-  });
-  $addEventListener(scrollbar_thumb, "", () => {
-    isSliding = false;
+  //slider
+  const slider_container = document.createElement("div");
+  slider_container.classList.add("slider-container");
+  page2.append(slider_container);
+  const slider = document.createElement("input");
+  slider.setAttribute("type", "range");
+  slider.setAttribute("min", min);
+  slider.setAttribute("max", max);
+  slider.setAttribute("value", pos);
+  slider.setAttribute("step", step);
+  slider.classList.add("slider");
+  slider_container.append(slider);
+
+  $addEventListener(slider, "change", (e) => {
+    fxn(parseInt(e.target.value));
   });
   //create ticks
   const tick_container = document.createElement("div");
   tick_container.classList.add("tick-container");
-
-  //append all div to page2
-
-  page2.append(scrollbar);
   page2.append(tick_container);
   tick_container.innerHTML = `<span>${minLabel}</span><hr><span>${maxLabel}</span>`;
 }
@@ -77,18 +77,49 @@ function createColorChoices(placeholder, fxn, ...colors) {
     });
   }
 }
-createSlider("Vignitte Spread", 0, 10);
-createSlider("Zoom", 0, 3);
-createSlider("Player Speed", 0, 3);
+createSlider("Vignitte Spread", 0, 100, parseInt(vignitte_spread), (value) => {
+  vignitte_spread = value + "%";
+  positionPlayer();
+});
+createSlider(
+  "Zoom",
+  1,
+  5,
+  parseFloat(width_ratio),
+  (value) => {
+    width_ratio = parseInt(value);
+    players_def_size =
+      (config.players_def_size * parseInt(value)) / config.width_ratio;
+
+    drawBoard(context);
+  },
+  "0%",
+  "100%"
+);
+createSlider(
+  "Player Speed",
+  1,
+  2,
+  player_speed,
+  (value) => {
+    console.log(player_speed);
+    player_speed = parseInt(value);
+  },
+  "slow",
+  "fast",
+  1
+);
 createColorChoices(
   "Vignitte Color",
   (color) => {
     vignitte_color = color;
     if (color === config.vignitte_color_unused) {
       nav.style.color = "black";
+      nav.style.boxShadow = "var(--nav-black-shadow)";
       document.body.style.background = "white";
     } else {
       nav.style.color = "white";
+      nav.style.boxShadow = "var(--nav-white-shadow)";
       document.body.style.background = "black";
     }
     positionPlayer();
