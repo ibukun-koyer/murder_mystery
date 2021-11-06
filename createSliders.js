@@ -92,7 +92,6 @@ createSlider(
       (config.players_def_size * parseInt(value)) / config.width_ratio;
 
     drawBoard(context);
-    console.log(value);
   },
   "0%",
   "100%"

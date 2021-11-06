@@ -23,8 +23,6 @@ function $removeAllEventListeners(list = DOMlist) {
     let obj = list.pop();
     obj[0].removeEventListener(obj[1], obj[2]);
     removeAllEventListeners(list);
-    console.log(`event ${obj[1]}`);
-    console.log(obj[0]);
   }
 }
 function $delete(DOM) {

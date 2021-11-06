@@ -1,5 +1,8 @@
 const root = document.querySelector(".root");
 const timer = document.querySelector("#timer");
+const blinkers = document.querySelector(".blinkers");
+const interaction = document.querySelector(".wrap-interaction");
+const game = document.querySelector(".games");
 const min_image_width = config.min_image_width;
 let width_ratio = config.width_ratio;
 const height_ratio = config.height_ratio;
@@ -15,10 +18,39 @@ let current_width = config.initial_board_width;
 let current_height = config.initial_board_height;
 let current_x_offset = config.initial_x_offset;
 let current_y_offset = config.initial_y_offset;
+
 let shouldRedrawBoard = false;
 let collided_x = "";
 let collided_y = "";
+//confirm it is in view
+function isInView(x, y) {
+  let rootWidth = getParentProp("width", { float: true });
+  let rootHeight = getParentProp("height", { float: true });
+  x = current_width - (x / 100) * current_width;
+  y = (y / 100) * current_height;
+  let minX = Math.abs(current_x_offset);
+  let maxX = Math.abs(current_x_offset - rootWidth);
+  let minY = Math.abs(current_y_offset);
+  let maxY = Math.abs(current_y_offset - rootHeight);
+  if (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+    return true;
+  }
+  return false;
+}
 
+let object = undefined;
+//function for creating object blinker
+function clearBlinkers() {
+  blinkers.innerHTML = "";
+}
+function createBlinker(x, y) {
+  const div = document.createElement("div");
+  div.classList.add("blinker");
+
+  div.style.top = y + "px";
+  div.style.left = x + "px";
+  blinkers.append(div);
+}
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
   let rootsize_orig = getParentProp(pos, { float: true });
@@ -194,6 +226,14 @@ function drawBoard(context) {
     );
 
     positionPlayer();
+    clearBlinkers();
+
+    for (let i of allObjects) {
+      if (isInView(i.x, i.y) && !i.completed) {
+        const [x, y] = normalize_image_position(i.x, i.y);
+        createBlinker(x, y);
+      }
+    }
   }
 }
 
@@ -203,24 +243,58 @@ const player_sprite_canvas = createCanvas();
 const context = prepareContext(canvas);
 const player_sprite_context = prepareContext(player_sprite_canvas);
 
-function inc_dec(index, sign) {
+//access points in colllision table
+function access_points_in_matrix(sign, index, inc = 1, secondSign) {
+  secondSign = secondSign ? secondSign : sign;
   let y =
-    index === 1
-      ? sign === "+"
-        ? Math.ceil(players_location[1] + player_speed)
-        : Math.ceil(players_location[1] - player_speed)
-      : Math.ceil(players_location[1]);
+    index === 1 || index === 2
+      ? secondSign === "+"
+        ? Math.floor(players_location[1] + inc)
+        : Math.floor(players_location[1] - inc)
+      : Math.floor(players_location[1]);
   let x =
-    index === 0
+    index === 0 || index === 2
       ? sign === "+"
-        ? Math.ceil(players_location[0] + player_speed)
-        : Math.ceil(players_location[0] - player_speed)
-      : Math.ceil(players_location[0]);
+        ? Math.floor(players_location[0] + inc)
+        : Math.floor(players_location[0] - inc)
+      : Math.floor(players_location[0]);
 
-  let offset = 4;
+  let offset = config.collision_offset;
 
-  let variable = parseInt(mappedArray[y + offset][100 - x]);
-
+  return parseInt(mappedArray[y + offset][100 - x]);
+}
+//function to check siblings
+function detectObject(depth = 2) {
+  for (let i = 1; i <= depth; i++) {
+    let check1 = access_points_in_matrix("-", 0);
+    let check2 = access_points_in_matrix("+", 0);
+    let check3 = access_points_in_matrix("-", 1);
+    let check4 = access_points_in_matrix("+", 1);
+    let check5 = access_points_in_matrix("+", 2);
+    let check6 = access_points_in_matrix("-", 2);
+    let check7 = access_points_in_matrix("-", 2, 1, "+");
+    let check8 = access_points_in_matrix("+", 2, 1, "-");
+    if (check1 > 1) {
+      if (!allObjects[check1 - 2].completed) return check1;
+    } else if (check2 > 1) {
+      if (!allObjects[check2 - 2].completed) return check2;
+    } else if (check3 > 1) {
+      if (!allObjects[check3 - 2].completed) return check3;
+    } else if (check4 > 1) {
+      if (!allObjects[check4 - 2].completed) return check4;
+    } else if (check5 > 1) {
+      if (!allObjects[check5 - 2].completed) return check5;
+    } else if (check6 > 1) {
+      if (!allObjects[check6 - 2].completed) return check6;
+    } else if (check7 > 1) {
+      if (!allObjects[check7 - 2].completed) return check7;
+    } else if (check8 > 1) {
+      if (!allObjects[check8 - 2].completed) return check8;
+    }
+  }
+}
+function inc_dec(index, sign) {
+  let variable = access_points_in_matrix(sign, index, player_speed);
   if (!variable) {
     if (sign === "+") {
       if (players_location[index] < 100) {
@@ -231,6 +305,12 @@ function inc_dec(index, sign) {
         players_location[index] -= player_speed;
       }
     }
+  }
+  object = detectObject();
+  if (object) {
+    use(1, "isVisible", "isNotVisible", interaction);
+  } else {
+    use(2, "isVisible", "isNotVisible", interaction);
   }
 }
 //div creator
@@ -267,6 +347,10 @@ $addEventListener(window, "keydown", (e) => {
       inc_dec(1, "+");
       positionPlayer();
       if (collided_y === "minus") inc_dec(1, "-");
+    } else if (e.code === "Enter" && object) {
+      use(2, "isVisible", "isNotVisible", interaction);
+      use(1, "isEnabled", "isNotEnabled", game);
+      allObjects[object - 2].runGame();
     }
   }
   console.log(players_location);

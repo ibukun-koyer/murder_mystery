@@ -1,5 +1,5 @@
 let isPaused = config.isPaused;
-const mainMenu = document.querySelector("section");
+const mainMenu = document.querySelector(".menu");
 const mainManuButton = document.querySelector("li i");
 let mainMenuButtonClass = ["fa fa-times", "fa fa-bars"];
 
@@ -35,6 +35,11 @@ $addEventListener(mainManuButton, "click", () => {
     use(2, "isNotEnabled", "isEnabled", page1);
     use(1, "isNotEnabled", "isEnabled", page3);
     use(1, "isNotEnabled", "isEnabled", page2);
+    use(2, "isVisible", "isNotVisible", interaction);
+  } else {
+    if (object) {
+      use(1, "isVisible", "isNotVisible", interaction);
+    }
   }
   adjustMainMenuAccoringly();
 });
@@ -42,7 +47,6 @@ $addEventListener(mainManuButton, "click", () => {
 //add event listeners for buttons on main menu
 $addEventListener(document.querySelector(".play-game"), "click", () => {
   isPaused = false;
-
   adjustMainMenuAccoringly();
 });
 $addEventListener(document.querySelector(".options"), "click", () => {

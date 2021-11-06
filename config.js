@@ -7,7 +7,7 @@ const config = {
   //the min image width is the min width of the board
   min_image_width: 2000,
   //the initial position the player is placed at
-  players_initial_position: [68, 43],
+  players_initial_position: [10, 7],
   //the initial size of the board
   initial_board_width: 0,
   initial_board_height: 0,
@@ -27,4 +27,6 @@ const config = {
   //the color of vignitte
   vignitte_color: "rgba(0,0,0,0.95)",
   vignitte_color_unused: "rgba(255,255,255, 0.95)",
+  //collision offset
+  collision_offset: 4,
 };
