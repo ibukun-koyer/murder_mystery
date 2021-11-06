@@ -6,7 +6,7 @@ const height_ratio = config.height_ratio;
 const players_def_size = config.players_def_size;
 let direction = config.default_direction;
 const player_speed = config.player_speed;
-const vignitte_color = config.vignitte_color;
+let vignitte_color = config.vignitte_color;
 const vignitte_spread = config.vignitte_spread;
 //where players location is x,y pair with values ranging from 0 - 100
 const players_location = config.players_initial_position;

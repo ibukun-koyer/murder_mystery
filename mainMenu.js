@@ -20,9 +20,11 @@ function use(useParam, param1, param2, DOM) {
 function adjustMainMenuAccoringly() {
   if (isPaused) {
     use(1, "isVisible", "isNotVisible", mainMenu);
+    use(2, "isNotEnabled", "isEnabled", mainMenu);
     mainManuButton.className = mainMenuButtonClass[0];
   } else {
     use(2, "isVisible", "isNotVisible", mainMenu);
+    use(1, "isNotEnabled", "isEnabled", mainMenu);
     mainManuButton.className = mainMenuButtonClass[1];
   }
 }
