@@ -92,6 +92,7 @@ createSlider(
       (config.players_def_size * parseInt(value)) / config.width_ratio;
 
     drawBoard(context);
+    console.log(value);
   },
   "0%",
   "100%"
@@ -116,11 +117,9 @@ createColorChoices(
     if (color === config.vignitte_color_unused) {
       nav.style.color = "black";
       nav.style.boxShadow = "var(--nav-black-shadow)";
-      document.body.style.background = "white";
     } else {
       nav.style.color = "white";
       nav.style.boxShadow = "var(--nav-white-shadow)";
-      document.body.style.background = "black";
     }
     positionPlayer();
   },

@@ -7,7 +7,7 @@ const config = {
   //the min image width is the min width of the board
   min_image_width: 2000,
   //the initial position the player is placed at
-  players_initial_position: [15, 7],
+  players_initial_position: [68, 43],
   //the initial size of the board
   initial_board_width: 0,
   initial_board_height: 0,
@@ -17,9 +17,9 @@ const config = {
   //the default size of the players sprite character
   players_def_size: 250,
   //default direction of sprite
-  default_direction: "left",
+  default_direction: "right",
   //VIGNITTE SPREAD
-  vignitte_spread: "30%",
+  vignitte_spread: "20%",
   //current play state, played or paused
   isPaused: true,
   //the players walking speed

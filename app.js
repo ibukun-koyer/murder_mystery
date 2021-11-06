@@ -24,33 +24,21 @@ function computeOffset(coord, pos, max_size) {
   let rootsize_orig = getParentProp(pos, { float: true });
   let rootsize = (rootsize_orig / max_size) * 100;
   let frame = Math.ceil(coord / rootsize);
-  let current_offset = max_size - rootsize_orig * frame;
-
-  if (pos === "height") {
-    frame =
-      Math.ceil(max_size / rootsize_orig) - Math.ceil(coord / rootsize) + 1;
-    current_offset = max_size - rootsize_orig * frame;
-  }
+  let current_offset;
   //-----------------------------------------------
   //-->collision detection
   //-----------------------------------------------
 
-  if (current_offset >= max_size) {
-    current_offset = max_size - rootsize_orig;
-  }
-  current_offset *= -1;
+  if (pos === "width") {
+    frame = Math.ceil(coord / rootsize);
 
-  if (current_offset > 0) {
-    current_offset = 0;
+    current_offset =
+      (max_size - rootsize_orig) * -1 + rootsize_orig * (frame - 1);
   }
-
-  // if (
-  //   pos === "height" &&
-  //   current_offset !== 0 &&
-  //   Math.abs(current_offset) < rootsize_orig
-  // ) {
-  //   current_offset = rootsize_orig * -1;
-  // }
+  if (pos === "height") {
+    frame = Math.ceil(coord / rootsize);
+    current_offset = rootsize_orig * (frame - 1) * -1;
+  }
 
   return current_offset;
 }
@@ -229,7 +217,9 @@ function inc_dec(index, sign) {
         : Math.ceil(players_location[0] - player_speed)
       : Math.ceil(players_location[0]);
 
-  let variable = parseInt(mappedArray[y + 4][100 - x]);
+  let offset = 4;
+
+  let variable = parseInt(mappedArray[y + offset][100 - x]);
 
   if (!variable) {
     if (sign === "+") {
@@ -279,6 +269,7 @@ $addEventListener(window, "keydown", (e) => {
       if (collided_y === "minus") inc_dec(1, "-");
     }
   }
+  console.log(players_location);
 });
 
 setInterval(() => {
