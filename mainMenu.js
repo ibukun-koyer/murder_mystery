@@ -1,4 +1,5 @@
 let isPaused = config.isPaused;
+const audio = document.querySelector("#gameAudio");
 const mainMenu = document.querySelector(".menu");
 const mainManuButton = document.querySelector("li i");
 let mainMenuButtonClass = ["fa fa-times", "fa fa-bars"];
@@ -32,11 +33,15 @@ adjustMainMenuAccoringly();
 $addEventListener(mainManuButton, "click", () => {
   isPaused = !isPaused;
   if (isPaused) {
+    closeFullscreen();
+    audio.pause();
     use(2, "isNotEnabled", "isEnabled", page1);
     use(1, "isNotEnabled", "isEnabled", page3);
     use(1, "isNotEnabled", "isEnabled", page2);
     use(2, "isVisible", "isNotVisible", interaction);
   } else {
+    openFullscreen(document.body);
+    audio.play();
     if (object) {
       use(1, "isVisible", "isNotVisible", interaction);
     }
@@ -46,6 +51,8 @@ $addEventListener(mainManuButton, "click", () => {
 
 //add event listeners for buttons on main menu
 $addEventListener(document.querySelector(".play-game"), "click", () => {
+  openFullscreen(document.body);
+  audio.play();
   isPaused = false;
   adjustMainMenuAccoringly();
 });
