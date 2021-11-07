@@ -113,13 +113,7 @@ createColorChoices(
   "Vignitte Color",
   (color) => {
     vignitte_color = color;
-    if (color === config.vignitte_color_unused) {
-      nav.style.color = "black";
-      nav.style.boxShadow = "var(--nav-black-shadow)";
-    } else {
-      nav.style.color = "white";
-      nav.style.boxShadow = "var(--nav-white-shadow)";
-    }
+
     positionPlayer();
   },
   config.vignitte_color,
