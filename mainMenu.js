@@ -33,7 +33,7 @@ adjustMainMenuAccoringly();
 $addEventListener(mainManuButton, "click", () => {
   isPaused = !isPaused;
   if (isPaused) {
-    closeFullscreen();
+    // closeFullscreen();
     audio.pause();
     use(2, "isNotEnabled", "isEnabled", page1);
     use(1, "isNotEnabled", "isEnabled", page3);

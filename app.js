@@ -308,6 +308,12 @@ function inc_dec(index, sign) {
         players_location[index] -= player_speed;
       }
     }
+    // footsteps
+    let footstep = new Audio(
+      "zapsplat_foley_footstep_single_boys_sneaker_on_concrete_001_50911.mp3"
+    );
+    footstep.play();
+    footstep.volume = 0.1;
   }
   object = detectObject();
   if (object) {
