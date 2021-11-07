@@ -113,7 +113,6 @@ createColorChoices(
   "Vignitte Color",
   (color) => {
     vignitte_color = color;
-
     positionPlayer();
   },
   config.vignitte_color,

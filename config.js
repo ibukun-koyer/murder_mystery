@@ -29,4 +29,6 @@ const config = {
   vignitte_color_unused: "rgba(255,255,255, 0.95)",
   //collision offset
   collision_offset: 4,
+  //proximity depth
+  proximity_depth: 2,
 };

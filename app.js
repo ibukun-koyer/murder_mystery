@@ -267,7 +267,7 @@ function access_points_in_matrix(sign, index, inc = 1, secondSign) {
   return parseInt(mappedArray[y + offset][100 - x]);
 }
 //function to check siblings
-function detectObject(depth = 2) {
+function detectObject(depth = config.proximity_depth) {
   for (let i = 1; i <= depth; i++) {
     let check1 = access_points_in_matrix("-", 0);
     let check2 = access_points_in_matrix("+", 0);
