@@ -97,7 +97,22 @@ const allObjects = [
   Error suscipit odio ducimus nihil amet. Ipsum nam, modi, facere reiciendis, nihil illo repudiandae id at minima magni cumque culpa eum! Beatae explicabo molestias, necessitatibus ea velit numquam at eaque.`,
     1
   ),
-  new Interactable(15, 6, "Computer", "in the process", 1, true),
+  new Interactable(
+    15,
+    6,
+    `Computer mission", "We have finally uncovered what went on here, nice work team. The people went missing because ...    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex nihil quia, alias ipsa maiores ducimus molestias tenetur placeat adipisci ut doloribus iste repudiandae soluta dicta sit quae amet dolorum tempora!
+  Numquam, itaque, voluptates nulla delectus enim fugit voluptas optio tempora fugiat quo sapiente magni animi nemo! Reiciendis voluptatibus eligendi qui odit aperiam impedit ipsam inventore maiores doloribus modi, distinctio eum.
+  Optio facere veniam vitae ea esse totam! Tenetur similique sint nulla perferendis veniam ad voluptates atque eos quia rerum. Officia aliquam quae ducimus dolorem quis ratione sunt animi et odio.
+  Minus, a nostrum reiciendis doloribus tempora libero, beatae atque praesentium ea quisquam quam facilis ex iure accusantium! Fugiat numquam perspiciatis, enim veritatis sapiente magni, dolorum, sint porro voluptates nisi animi.
+  Voluptatibus voluptates doloremque atque consequuntur nostrum repudiandae eius harum culpa et ipsa debitis fugit dicta tempora nobis voluptatum pariatur officia exercitationem, perferendis ab ipsam eaque architecto. Placeat sint impedit optio.
+  Officia magni distinctio rerum officiis amet nobis voluptatum, ea molestias hic. Facere eligendi quibusdam blanditiis voluptatibus, laborum ratione suscipit molestiae nisi aperiam facilis, veniam architecto numquam, inventore aspernatur autem accusamus.
+  Necessitatibus eos saepe numquam consectetur assumenda itaque odit exercitationem cumque maxime illo culpa, tempora laborum facilis mollitia quaerat? Omnis corrupti, sed sint similique repellendus voluptate eveniet dolorem ipsum expedita. Corporis!
+  Voluptatum, neque vitae maiores aut nulla doloribus, totam ab quaerat, laboriosam architecto quas modi! In sunt laborum officia asperiores magni dolorum cupiditate fugit libero, obcaecati, temporibus iure odit delectus cum!
+  Repudiandae iure quo dolorem! Laborum doloremque quam consequuntur eius aperiam quia. Adipisci praesentium voluptates quae nostrum natus reprehenderit aliquid, veniam impedit, accusantium perferendis molestiae necessitatibus recusandae illo iure! Repellendus, sed.
+  Error suscipit odio ducimus nihil amet. Ipsum nam, modi, facere reiciendis, nihil illo repudiandae id at minima magni cumque culpa eum! Beatae explicabo molestias, necessitatibus ea velit numquam at eaque.`,
+    1,
+    true
+  ),
 ];
 
 //functions for adding to the map
