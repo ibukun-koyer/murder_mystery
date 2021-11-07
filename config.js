@@ -17,7 +17,7 @@ const config = {
   //the default size of the players sprite character
   players_def_size: 250,
   //default direction of sprite
-  default_direction: "right",
+  default_direction: "left",
   //VIGNITTE SPREAD
   vignitte_spread: "20%",
   //current play state, played or paused
