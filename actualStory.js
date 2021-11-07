@@ -100,7 +100,8 @@ const allObjects = [
   new Interactable(
     15,
     6,
-    `Computer mission", "We have finally uncovered what went on here, nice work team. The people went missing because ...    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex nihil quia, alias ipsa maiores ducimus molestias tenetur placeat adipisci ut doloribus iste repudiandae soluta dicta sit quae amet dolorum tempora!
+    "Computer mission",
+    `We have finally uncovered what went on here, nice work team. The people went missing because ...    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ex nihil quia, alias ipsa maiores ducimus molestias tenetur placeat adipisci ut doloribus iste repudiandae soluta dicta sit quae amet dolorum tempora!
   Numquam, itaque, voluptates nulla delectus enim fugit voluptas optio tempora fugiat quo sapiente magni animi nemo! Reiciendis voluptatibus eligendi qui odit aperiam impedit ipsam inventore maiores doloribus modi, distinctio eum.
   Optio facere veniam vitae ea esse totam! Tenetur similique sint nulla perferendis veniam ad voluptates atque eos quia rerum. Officia aliquam quae ducimus dolorem quis ratione sunt animi et odio.
   Minus, a nostrum reiciendis doloribus tempora libero, beatae atque praesentium ea quisquam quam facilis ex iure accusantium! Fugiat numquam perspiciatis, enim veritatis sapiente magni, dolorum, sint porro voluptates nisi animi.
