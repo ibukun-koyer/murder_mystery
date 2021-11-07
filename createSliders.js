@@ -71,9 +71,11 @@ function createColorChoices(placeholder, fxn, ...colors) {
     contain_colors.append(color_box);
     $addEventListener(color_box, "click", () => {
       fxn(color);
-      use(1, "isSelected", "isNotSelected", color_box);
-      use(2, "isSelected", "isNotSelected", selected);
-      selected = color_box;
+      if (selected !== color_box) {
+        use(1, "isSelected", "isNotSelected", color_box);
+        use(2, "isSelected", "isNotSelected", selected);
+        selected = color_box;
+      }
     });
   }
 }
