@@ -57,8 +57,6 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  /* background: rgba(255, 255, 255, 0.1);
-  box-shadow: var(--nav-white-shadow); */
 }
 nav ul {
   margin: 0;
@@ -253,7 +251,6 @@ nav i:hover {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  justify-content: center;
 }
 .color_box {
   width: 3rem;
