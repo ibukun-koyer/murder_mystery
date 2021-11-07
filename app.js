@@ -43,13 +43,16 @@ let object = undefined;
 function clearBlinkers() {
   blinkers.innerHTML = "";
 }
-function createBlinker(x, y) {
+function createBlinker(x, y, isGold) {
   const div = document.createElement("div");
   div.classList.add("blinker");
 
   div.style.top = y + "px";
   div.style.left = x + "px";
   blinkers.append(div);
+  if (isGold) {
+    div.classList.add("isGold");
+  }
 }
 //computation of the board offset
 function computeOffset(coord, pos, max_size) {
@@ -231,7 +234,7 @@ function drawBoard(context) {
     for (let i of allObjects) {
       if (isInView(i.x, i.y) && !i.completed) {
         const [x, y] = normalize_image_position(i.x, i.y);
-        createBlinker(x, y);
+        createBlinker(x, y, i.isGold);
       }
     }
   }
