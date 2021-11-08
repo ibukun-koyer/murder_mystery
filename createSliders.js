@@ -1,12 +1,12 @@
-const nav = document.querySelector("nav");
-function createLabel(text) {
+function createLabel(text, page = page2, size) {
   //placeholder
   const placeholder_container = document.createElement("label");
   placeholder_container.classList.add("config-label");
   placeholder_container.innerText = text;
   let id = text.replace(/\s/, "-");
   placeholder_container.setAttribute("for", id);
-  page2.append(placeholder_container);
+  page.append(placeholder_container);
+  placeholder_container.style.fontSize = size ? size : "";
 }
 function createSlider(
   placeholder,
@@ -47,8 +47,10 @@ function createSlider(
   const tick_container = document.createElement("div");
   tick_container.classList.add("tick-container");
   page2.append(tick_container);
+
   tick_container.innerHTML = `<span>${minLabel}</span><hr><span>${maxLabel}</span>`;
 }
+
 function createColorChoices(placeholder, fxn, ...colors) {
   //placeholder
   createLabel(placeholder);
@@ -79,6 +81,7 @@ function createColorChoices(placeholder, fxn, ...colors) {
     });
   }
 }
+
 createSlider("Vignitte Spread", 0, 100, parseInt(vignitte_spread), (value) => {
   vignitte_spread = value + "%";
   positionPlayer();

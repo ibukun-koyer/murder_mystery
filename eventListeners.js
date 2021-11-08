@@ -1,4 +1,4 @@
-const DOMlist = [];
+
 function $addEventListener(DOM, event, fxn) {
   DOMlist.push([DOM, event, fxn]);
   DOM.addEventListener(event, fxn);

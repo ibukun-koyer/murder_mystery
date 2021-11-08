@@ -1,6 +1,3 @@
-const times = document.querySelector(".games i");
-const times2 = document.querySelector(".journal-view i");
-
 function clear(obj) {
   if (object) {
     use(1, "isVisible", "isNotVisible", interaction);

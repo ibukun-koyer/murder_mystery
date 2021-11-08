@@ -1,13 +1,3 @@
-let isPaused = config.isPaused;
-const audio = document.querySelector("#gameAudio");
-const mainMenu = document.querySelector(".menu");
-const mainManuButton = document.querySelector("li i");
-let mainMenuButtonClass = ["fa fa-times", "fa fa-bars"];
-
-const page1 = document.querySelector(".page1-mainmenu");
-const page2 = document.querySelector(".page2-mainmenu");
-const page3 = document.querySelector(".page3-mainmenu");
-
 function use(useParam, param1, param2, DOM) {
   if (useParam === 1) {
     DOM.classList.remove(param2);
@@ -61,6 +51,7 @@ $addEventListener(document.querySelector(".options"), "click", () => {
   use(2, "isNotEnabled", "isEnabled", page2);
 });
 $addEventListener(document.querySelector(".view-journals"), "click", () => {
+  journals();
   use(1, "isNotEnabled", "isEnabled", page1);
   use(2, "isNotEnabled", "isEnabled", page3);
 });

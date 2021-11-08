@@ -140,7 +140,7 @@ nav i:hover {
 }
 .page1-mainmenu,
 .page2-mainmenu,
-.page3-main-menu {
+.page3-mainmenu {
   padding: 2rem;
   box-sizing: border-box;
   display: flex;
@@ -203,7 +203,8 @@ nav i:hover {
 .page2-mainmenu::-webkit-scrollbar,
 .page3-main-menu::-webkit-scrollbar,
 .journal-view article::-webkit-scrollbar,
-.games article::-webkit-scrollbar {
+.games article::-webkit-scrollbar,
+.journal-notes-container::-webkit-scrollbar {
   height: 0;
   border-radius: 0.5rem;
 }
@@ -257,6 +258,53 @@ nav i:hover {
   height: 3rem;
   border-radius: 0.5rem;
   cursor: pointer;
+}
+.journal_box {
+  width: 100%;
+  height: 10rem;
+  font-size: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  border: 3px solid var(--gold-glow-color);
+  backdrop-filter: blur(5px);
+  background-color: var(--white-journal-bkg);
+  color: #7c7c7c;
+}
+.journal-notes-container {
+  margin-top: 2rem;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow: auto;
+}
+
+.journal_box::before {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to top, white 0%, white 20%, transparent);
+  content: "";
+  width: 100%;
+  height: 50%;
+}
+.wrap-banner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: violet;
+}
+.nothing-here {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #777;
 }
 .isSelected {
   transition: 0.3s;
@@ -388,6 +436,7 @@ nav i:hover {
 }
 
 .gold_full_centered {
+  color: #777;
   width: 100%;
   height: 100%;
   display: flex;

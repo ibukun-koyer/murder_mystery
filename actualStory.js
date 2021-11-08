@@ -1,10 +1,8 @@
 //this id is used to represent each object, access the object gotten by doing allObjects[the number in the pos - 2]
 let ID = 2;
-//the page to inject games
-const gamePage = document.querySelector(".games article");
-//the page for journals
-const journal_article = document.querySelector(".journal-view article");
-const journal_page = document.querySelector(".journal-view");
+function note(name, journal) {
+  return `<h1>${name + " Challenge"}</h1><p>${journal}</p>`;
+}
 //this class would be used for each object
 class Interactable {
   constructor(x, y, name, journal, challengeFxnId, isGold = false) {
@@ -72,9 +70,7 @@ class Interactable {
   }
   displayJournal() {
     use(1, "isEnabled", "isNotEnabled", journal_page);
-    journal_article.innerHTML = `<h1>${this.name + " Challenge"}</h1><p>${
-      this.journal
-    }</p>`;
+    journal_article.innerHTML = note(this.name, this.journal);
   }
 }
 //this would contain the list of all instances of interactables in the game
