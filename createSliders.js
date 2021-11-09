@@ -90,7 +90,7 @@ createSlider(
   "Zoom",
   1,
   5,
-  parseFloat(width_ratio),
+  parseFloat(config.faked_ratio),
   (value) => {
     width_ratio = parseInt(value);
     players_def_size =
@@ -123,3 +123,9 @@ createColorChoices(
   config.vignitte_color,
   config.vignitte_color_unused
 );
+
+width_ratio = parseInt(config.faked_ratio);
+players_def_size =
+  (config.players_def_size * parseInt(config.faked_ratio)) / config.width_ratio;
+
+drawBoard(context);

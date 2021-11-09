@@ -2,6 +2,7 @@
 const config = {
   //width ratio means the ratio for the board with respect to the screen size
   width_ratio: 16 / 6,
+  faked_ratio: 1,
   //height ratio means the ratio for the board with respect to the screen size
   height_ratio: 2 / 3,
   //the min image width is the min width of the board
@@ -19,14 +20,14 @@ const config = {
   //default direction of sprite
   default_direction: "left",
   //VIGNITTE SPREAD
-  vignitte_spread: "20%",
+  vignitte_spread: "10%",
   //current play state, played or paused
   isPaused: true,
   //the players walking speed
   player_speed: 0.5,
   //the color of vignitte
-  vignitte_color: "rgba(0,0,0,0.95)",
-  vignitte_color_unused: "rgba(255,255,255, 0.95)",
+  vignitte_color: "rgba(0,0,0,0.98)",
+  vignitte_color_unused: "rgba(27, 67, 50,0.98)",
   //collision offset
   collision_offset: 4,
   //proximity depth

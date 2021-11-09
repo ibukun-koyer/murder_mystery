@@ -174,7 +174,7 @@ function positionPlayer() {
       );
 
       vignette.style.backgroundImage = `radial-gradient(
-        circle at ${
+        ellipse at ${
           (player_pos[0] / getParentProp("width", { float: true })) * 100
         }% ${(player_pos[1] / getParentProp("height", { float: true })) * 100}%,
         transparent 0%,
